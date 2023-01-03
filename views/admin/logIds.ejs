@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../layouts/header.ejs') %>
+    </head>
+    <body>
+        <div class="relative w-full h-full max-w-screen-6xl flex">
+            <div class="flex flex-row w-full h-full">
+                <!-- Navigation bar -->
+                <%- include('../layouts/navbar.ejs', {position: "logId"}) %>
+
+                <!-- All content -->
+                <div class="grow flex h-full overflow-y-auto">
+                    <div class="flex flex-col w-full ">
+                        <!-- Top bar -->
+                        <%- include('../layouts/topBar.ejs', {name: "Log Id"}) %>
+                        <!-- Container -->
+                        <div class="flex px-10 mt-4 justify-center items-center ">
+                            <div class="flex flex-col gap-8 w-full">
+                                <div class="flex flex-col lg:flex-row justify-between items-center w-full gap-6 text-sm">
+                                    <!-- Actions button -->
+                                    <div class="flex flex-row items-center gap-2">
+                                        <button class="px-4 xl:px-6 py-2 xl:py-4 bg-black text-white rounded-xl active-modal-create" data-view="false">Create Log id</button>
+                                        <button class="px-4 xl:px-6 py-2 xl:py-4 bg-[#FF432A] text-white rounded-xl">Suspended Log id</button>
+                                    </div>
+                                    <div class="flex flex-row w-full md:w-8/12 lg:w-fit xl:w-4/12 bg-gray-200 rounded-xl py-2 px-4 gap-4 items-center">
+                                        <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                                        <input type="text" name="user" class="bg-gray-200 peer border-0 focus:border-0 grow" placeholder="Search User">
+                                    </div>
+                                </div>
+                                <div class="flex overflow-x-auto">
+                                    <table class="text-sm text-left text-gray-500 w-full">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-200">
+                                            <tr>
+                                                <th scope="col" class="p-4"></th>
+                                                <th scope="col" class="py-3 px-6">
+                                                    LogIds
+                                                </th>
+                                                <th scope="col" class="py-3 px-6">
+                                                    Types
+                                                </th>
+                                                <th scope="col" class="py-3 px-6">
+                                                    FirstName
+                                                </th>
+                                                <th scope="col" class="py-3 px-6">
+                                                    LastName
+                                                </th>
+                                                <th scope="col" class="py-3 px-6">
+                                                    Created At
+                                                </th>
+                                                <th scope="col" class="py-3 px-6">
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% data.data.forEach(function(item) {%>
+                                                <tr class="bg-white border-b hover:bg-gray-50">
+                                                    <td class="p-4 w-4">
+                                                        <div class="flex items-center">
+                                                            <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="py-4 px-6">
+                                                        <%= item.Name %> 
+                                                    </td>
+                                                    <td class="py-4 px-6">
+                                                        <%= item.Type %> 
+                                                    </td>
+                                                    <td class="py-4 px-6">
+                                                        <%= item.FirstName %> 
+                                                    </td>
+                                                    <td class="py-4 px-6">
+                                                        <%= item.LastName %> 
+                                                    </td>
+                                                    <td class="py-4 px-6">
+                                                        <%= new Date(item.CreatedAt).toISOString().slice(0, 10); %>
+                                                    </td>
+                                                    <td class="py-4 px-6 ">
+                                                        <!-- Modal toggle -->
+                                                        <a href="#" type="button" data-id="<%= item.Id %>" data-view="false" class="font-medium text-[#FF432A] hover:underline active-modal-edit">Edit</a> / 
+                                                        <a href="#" type="button" data-id="<%= item.Id %>" data-view="false" class="font-medium text-[#FF432A] hover:underline active-modal-remove">Remove</a>
+                                                    </td>
+                                                </tr>
+                                            <%}) %> 
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="flex justify-between items-center mb-4" aria-label="Table navigation">
+                                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-gray-900"><%= data.page.startIndex %>-<%= data.page.endIndex %></span> of <span class="font-semibold text-gray-900 dark:text-white"><%= data.page.totalIndex %></span></span>
+                                    <ul class="flex items-center">
+                                        <% if (typeof data.page.previous != 'undefined') { %>
+                                            <li>
+                                                <a href="/application/<%= data.page.previous.page %>/<%= data.page.previous.limit %>" class="block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Previous</span>
+                                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                                </a>
+                                            </li>
+                                        <% } %> 
+                                        <li>
+                                            <a href="#" aria-current="page" class="z-10 py-2 px-3 leading-tight text-red-600 bg-red-50 border border-red-300 hover:bg-red-100 hover:text-red-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"><%= data.page.actualPage %></a>
+                                        </li>
+                                        <% if (typeof data.page.next != 'undefined') { %>
+                                            <li>
+                                                <a href="/application/<%= data.page.next.page %>/<%= data.page.next.limit %>" class="block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Next</span>
+                                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                                </a>
+                                            </li>
+                                        <% } %> 
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modals -->
+            <!-- Modal 1 -->
+            <div class="absolute w-full h-full hidden modal-left-bar">
+                <div class="relative flex w-full h-full">
+                    <div class="absolute w-full h-full bg-black/30 bg-modal-left-bar"></div>
+                    <div class="absolute flex flex-col gap-4 h-full border-r px-6 w-4/12 md:w-3/12 justify-between lg:hidden bg-white button-translate-in">
+                        <div class="flex flex-col gap-4 w-full">  
+                            <div class="flex py-4">
+                                <div class="flex flex-row justify-between items-center w-full">
+                                    <label class="text-xl font-medium ">
+                                        Name
+                                    </label>
+                                    <a 
+                                    href=""><i class="fa fa-chevron-right fa-xl" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-gray-700">Users</label>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-window-maximize fa-xl" aria-hidden="true"></i>
+                                    Home
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <div class="h-full w-[3px] bg-black rounded-t-lg rounded-b-lg"></div>
+                                    <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                                    Users
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-folder-o fa-xl" aria-hidden="true"></i>
+                                    Profile Metier
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-folder-o fa-xl" aria-hidden="true"></i>
+                                    Profile Metier
+                                </butto
+                                n>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                                    Revue
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex w-full">
+                            <img src="/assets/logo.png" class="w-full object-contain mb-10" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute w-full h-full modal-create hidden">
+            <div class="relative w-full h-full flex justify-center items-center">
+                <div class="absolute w-full h-full bg-black/30 bg-modal-left-bar remove-modal-create"></div>
+                <div class="absolute flex w-4/12 bg-white rounded-lg">
+                    <div class="flex flex-col px-4 py-2 gap-10 w-full">
+                        <h1 class="text-lg font-semibold">Add Type Connection</h1>
+                        <form class="flex flex-col gap-4" method="post" action="/typeConnection">
+                            <input type="text" name="name" class="border text-md px-4 py-2 rounded-lg">
+                            <div class="flex w-full justify-center">
+                                <button type="submit" class="px-4 py-2 rounded-lg bg-black text-white text-lg font-semibold">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute w-full h-full modal-edit hidden">
+            <div class="relative w-full h-full flex justify-center items-center">
+                <div class="absolute w-full h-full bg-black/30 bg-modal-left-bar remove-modal-edit"></div>
+                <div class="absolute flex w-4/12 bg-white rounded-lg">
+                    <div class="flex flex-col px-4 py-2 gap-10 w-full">
+                        <h1 class="text-lg font-semibold">Edit Type Connection</h1>
+                        <form class="flex flex-col gap-4" method="post" action="/typeConnection/edit">
+                            <input type="number" name="id" value="" class="hidden edit-id"/>
+                            <input type="text" name="name" value="" class="border text-md px-4 py-2 rounded-lg edit-name">
+                            <div class="flex w-full justify-center">
+                                <button type="submit" class="px-4 py-2 rounded-lg bg-black text-white text-lg font-semibold">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Script -->
+        <%- include('../layouts/footer.ejs') %>
+
+        <script>
+            $(".active-modal-create").click(function() {
+                if($(this).attr("data-view") == "true") {
+                    $(".modal-create").removeClass("flex");
+                    $(".modal-create").addClass("hidden");
+                    $(this).attr("data-view", "false");
+                } else {
+                    $(".modal-create").removeClass("hidden");
+                    $(".modal-create").addClass("flex");
+                    $(this).attr("data-view", "true");
+                }
+            });
+
+            $(".remove-modal-create").click(function() {
+                $(".modal-create").removeClass("flex");
+                $(".modal-create").addClass("hidden");
+                $(".active-modal-create").attr("data-view", "false");
+            });
+
+            $(".active-modal-edit").click(function() {
+                if($(this).attr("data-view") == "true") {
+                    $(".modal-edit").removeClass("flex");
+                    $(".modal-edit").addClass("hidden");
+                    $(this).attr("data-view", "false");
+                } else {
+                    $(".modal-edit").removeClass("hidden");
+                    $(".modal-edit").addClass("flex");
+                    var id = $(this).attr("data-id");
+                    const data = JSON.parse('<%- JSON.stringify(data) %>');
+                    data.data.forEach(item => {
+                        if (item.Id == id) {
+                            $(".edit-id").attr("value", id);
+                            $(".edit-name").attr("value", item.Name);
+                        }
+                    });
+                    $(this).attr("data-view", "true");
+                }
+            });
+
+            $(".remove-modal-edit").click(function() {
+                $(".modal-edit").removeClass("flex");
+                $(".modal-edit").addClass("hidden");
+                $(".active-modal-edit").attr("data-view", "false");
+            });
+            
+        </script>
+    </body>
+</html>

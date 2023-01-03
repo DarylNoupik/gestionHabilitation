@@ -1,0 +1,53 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<!-- <script src="/vendors/tailwind/tailwindcss.js"></script> -->
+<script>
+    // card modal
+    $(".button-view-2").click(function() {
+        // Hid oder modal
+        var defaultThisValue = $(this).attr("data-view");
+        $(".button-view-2").attr("data-view", "false");
+        $(".modal-view-2").removeClass("flex");
+        $(".modal-view-2").addClass("hidden");
+        $(this).attr("data-view", defaultThisValue);
+        if($(this).attr("data-view") == "true") {
+            $(this).children(".modal-view-2").removeClass("flex");
+            $(this).children(".modal-view-2").addClass("hidden");
+            $(this).attr("data-view", "false");
+        } else {
+            hidden2 = true;
+            $(this).children(".modal-view-2").removeClass("hidden");
+            $(this).children(".modal-view-2").addClass("flex");
+            $(this).attr("data-view", "true");
+        }
+    });
+
+    // left bar modal
+    $(window).resize(function() {
+        if($(window).width() >= 1024) {
+            $(".leftBar-modal").attr("data-modal", "false");
+            $(".modal-left-bar").removeClass("flex");
+            $(".modal-left-bar").addClass("hidden");
+        }
+    });
+
+    $(".leftBar-modal").click(function() {
+        $(".button-view-2").attr("data-view", "false");
+        $(".modal-view-2").removeClass("flex");
+        $(".modal-view-2").addClass("hidden");
+        if($(this).attr("data-modal") == "true") {
+            $(".modal-left-bar").removeClass("flex");
+            $(".modal-left-bar").addClass("hidden");
+            $(this).attr("data-modal", "false");
+        } else {
+            $(".modal-left-bar").removeClass("hidden");
+            $(".modal-left-bar").addClass("flex");
+            $(this).attr("data-modal", "true");
+        }
+    });
+
+    $(".bg-modal-left-bar").click(function() {
+        $(".modal-left-bar").removeClass("flex");
+        $(".modal-left-bar").addClass("hidden");
+        $(".leftBar-modal").attr("data-modal", "false");
+    })
+</script>

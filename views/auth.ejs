@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="stylesheet" href="/styles/style.css">
+        <link rel="stylesheet" href="/vendors/font-awesome/css/font-awesome.min.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>
+        <div class="w-full h-full max-w-screen-4xl flex">
+            <div class="flex flex-row w-full h-full">
+                <!-- Illustration -->
+                <div class="hidden lg:flex relative w-1/2">
+                    <!-- Image -->
+                    <div class="absolute h-full w-full flex justify-center items-center">
+                        <img src="/assets/3644996.png" class="w-full h-full object-cover" />
+                    </div>
+                    <!-- Logo -->
+                    <div class="absolute h-full w-full flex justify-start items-start p-8">
+                        <img src="/assets/logo.png" />
+                    </div>
+                </div>
+                <!-- Sign In -->
+                <div class="flex grow p-10 justify-center items-center">
+                    <div class="flex flex-col gap-4">
+                        <% if(data.statut == 500) { %>
+                            <div class="flex modale-alert">
+                                <div class="flex flex-row gap-4 text-white bg-red-600 p-2 rounded-lg">
+                                    <p class="p-2"><%= data.errorInfo %></p>
+                                    <button class="close-modale-alert"><i class="fa fa-times text-sm"></i></button>
+                                </div>
+                            </div>
+                        <% } %>
+                        <div class="flex lg:hidden justify-start items-start">
+                            <img src="/assets/logo.png" />
+                        </div>
+                        <h1 class="text-4xl font-bold">Sign In</h1>
+                        <p class="italic text-gray-600">
+                            If you don't have an account please contact our administrator
+                        </p>
+                        <form class="flex flex-col gap-6" action="/" method="POST">
+                            <div class="flex flex-col gap-1">
+                                <label>Username</label>
+                                <div class="flex flex-row gap-2 border-b border-black focus:border-red items-center pb-2">
+                                    <i class="fa fa-envelope-o fa-xl" aria-hidden="true"></i>
+                                    <input type="text" name="username" class="peer border-0 focus:border-0 text-xl grow" placeholder="Enter your username" required>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <label>Password</label>
+                                <div class="flex flex-row gap-2 border-b border-black focus:border-red items-center pb-2 group-input">
+                                    <i class="fa fa-lock fa-xl" aria-hidden="true"></i>
+                                    <input type="password" name="password" class="peer border-0 focus:border-0 text-xl grow input" placeholder="Enter your Password" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="flex justify-center px-2 py-4 rounded-2xl bg-[#FF432A] text-xl text-white font-bold text-white mt-8">
+                                Login
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- scripts -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <!-- <script src="./vendors/tailwind/tailwindcss.js"></script> -->
+        <script src="/scripts/script.js"></script>
+    </body>
+</html>

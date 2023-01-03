@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../layouts/header.ejs') %>
+    </head>
+    <body>
+        <div class="relative w-full h-full max-w-screen-6xl flex">
+            <div class="flex flex-row w-full h-full">
+                <!-- Navigation bar -->
+                <%- include('../layouts/navbar.ejs', {position: "user"}) %>
+
+                <!-- All content -->
+                <div class="grow flex h-full overflow-y-auto">
+                    <div class="flex flex-col w-full ">
+                        <!-- Top bar -->
+                        <%- include('../layouts/topBar.ejs', {name: "Users / Applications"}) %>
+                        <!-- Container -->
+                        <div class="flex px-10 mt-4 justify-center items-center ">
+                            <div class="flex flex-col gap-8 w-full">
+                                <div class="flex flex-col lg:flex-row justify-between items-center w-full gap-6 text-sm">
+                                    <!-- Actions button -->
+                                    <div class="flex flex-row items-center gap-2">
+                                        <button class="px-4 xl:px-6 py-2 xl:py-4 bg-black text-white rounded-xl">Access Right</button>
+                                    </div>
+                                    <div class="flex flex-row w-full md:w-8/12 lg:w-fit xl:w-4/12 bg-gray-200 rounded-xl py-2 px-4 gap-4 items-center">
+                                        <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                                        <input type="text" name="user" class="bg-gray-200 peer border-0 focus:border-0 grow" placeholder="Search User">
+                                    </div>
+                                </div>
+                                <div class="mt-4 flex flex-col gap-4 text-base">
+                                    <!-- User Card -->
+                                    <div class="flex justify-center">
+                                        <div class="flex flex-row gap-8 px-6 py-4 border">
+                                            <!-- Image -->
+                                            <div class="flex justify-center items-center">
+                                                <img src="/assets/defaultUser.png" class="h-40 object-contain" />
+                                            </div>
+                                            <!-- Infos -->
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                                <!-- User Name -->
+                                                <div class="flex flex-col">
+                                                    <label>Name</label>
+                                                    <p class="text-lg font-semibold"><%= data.data.user[0].FirstName %> <%= data.data.user[0].LastName %></p>
+                                                </div>
+                                                <% data.data.user[0]["Connections"].forEach(function(item) {%>
+                                                    <div class="flex flex-col">
+                                                        <label><%= item.typeConnection %> </label>
+                                                        <p class="text-lg font-semibold"><%= item.Name %> </p>
+                                                    </div>
+                                                <% }) %> 
+                                                <!-- Business Profile -->
+                                                <!-- <div class="flex flex-row mt-2 gap-1 items-center">
+                                                    <img src="./assets/logo2.jpeg" class="h-10 object-contain" />
+                                                    <p class="text-lg font-semibold">Intern</p>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                                    <% data.data.applications.forEach(function(item) {%>
+                                        <a href="" class="flex gap-2 border shadow-inner shadow-xl p-4 w-full text-start">
+                                            <div class="flex flex-row gap-8 w-full">
+                                                <!-- App Image -->
+                                                <div class="flex justify-center items-center w-5/12">
+                                                    <img src="/assets/logo2.jpeg" class="h-3/4 object-contain" />
+                                                </div>
+                                                <div class="flex flex-col gap-1 grow">
+                                                    <!-- App name -->
+                                                    <div class="flex">
+                                                        <label class="text-lg font-semibold"><%= item.Name %> </label>
+                                                    </div>
+                                                    <!-- Connection type -->
+                                                    <div class="flex flex-col">
+                                                        <label class="text-lg font-semibold">Connection type</label>
+                                                        <p class=""><%= item.typeConnection %>  : <%= item.logId %></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    <%}) %> 
+                                    
+                                </div>
+                                <div class="flex justify-between items-center mb-4" aria-label="Table navigation">
+                                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-gray-900">1-10</span> of <span class="font-semibold text-gray-900 dark:text-white">1000</span></span>
+                                    <ul class="flex items-center">
+                                        <% if (typeof data.page.previous != 'undefined') { %>
+                                            <li>
+                                                <a href="/application/<%= data.page.previous.page %>/<%= data.page.previous.limit %>" class="block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Previous</span>
+                                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                                </a>
+                                            </li>
+                                        <% } %> 
+                                        <li>
+                                            <a href="#" aria-current="page" class="z-10 py-2 px-3 leading-tight text-red-600 bg-red-50 border border-red-300 hover:bg-red-100 hover:text-red-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"><%= data.page.actualPage %></a>
+                                        </li>
+                                        <% if (typeof data.page.next != 'undefined') { %>
+                                            <li>
+                                                <a href="/application/<%= data.page.next.page %>/<%= data.page.next.limit %>" class="block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Next</span>
+                                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                                </a>
+                                            </li>
+                                        <% } %> 
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modals -->
+            <!-- Modal 1 -->
+            <div class="absolute w-full h-full hidden modal-left-bar">
+                <div class="relative flex w-full h-full">
+                    <div class="absolute w-full h-full bg-black/30 bg-modal-left-bar"></div>
+                    <div class="absolute flex flex-col gap-4 h-full border-r px-6 w-4/12 md:w-3/12 justify-between lg:hidden bg-white button-translate-in">
+                        <div class="flex flex-col gap-4 w-full">  
+                            <div class="flex py-4">
+                                <div class="flex flex-row justify-between items-center w-full">
+                                    <label class="text-xl font-medium ">
+                                        Name
+                                    </label>
+                                    <a 
+                                    href=""><i class="fa fa-chevron-right fa-xl" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-gray-700">Users</label>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-window-maximize fa-xl" aria-hidden="true"></i>
+                                    Home
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <div class="h-full w-[3px] bg-black rounded-t-lg rounded-b-lg"></div>
+                                    <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                                    Users
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-folder-o fa-xl" aria-hidden="true"></i>
+                                    Profile Metier
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-folder-o fa-xl" aria-hidden="true"></i>
+                                    Profile Metier
+                                </butto
+                                n>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                                    Revue
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex w-full">
+                            <img src="/assets/logo.png" class="w-full object-contain mb-10" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Script -->
+        <%- include('../layouts/footer.ejs') %>
+    </body>
+</html>

@@ -1,0 +1,31 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    outline: none;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.button-translate-in {
+    animation: 1s ease-out 0s 1 slideInFromLeft;
+}
+
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-200%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+

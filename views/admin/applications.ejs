@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../layouts/header.ejs') %>
+    </head>
+    <body>
+        <div class="relative w-full h-full max-w-screen-6xl flex">
+            <div class="flex flex-row w-full h-full">
+                <!-- Navigation bar -->
+                <%- include('../layouts/navbar.ejs', {position: "application"}) %>
+
+                <!-- All content -->
+                <div class="grow flex h-full overflow-y-auto">
+                    <div class="flex flex-col w-full ">
+                        <!-- Top bar -->
+                        <%- include('../layouts/topBar.ejs', {name: "application"}) %>
+                        <!-- Container -->
+                        <div class="flex px-10 mt-4 justify-center items-center ">
+                            <div class="flex flex-col gap-8 w-full">
+                                <div class="flex flex-col lg:flex-row justify-between items-center w-full gap-6 text-sm">
+                                    <!-- Actions button -->
+                                    <div class="flex flex-row items-center gap-2">
+                                        <button class="px-4 xl:px-6 py-2 xl:py-4 bg-black text-white rounded-xl active-modal-create" data-view="false">Create application</button>
+                                        <a href="/application/remove/1/10" class="px-4 xl:px-6 py-2 xl:py-4 bg-[#FF432A] text-white rounded-xl">Suspended application</a>
+                                    </div>
+                                    <div class="flex flex-row w-full md:w-8/12 lg:w-fit xl:w-4/12 bg-gray-200 rounded-xl py-2 px-4 items-center">
+                                        <form method="post" action="/application/search/view1" class="flex flex-row w-full gap-4">
+                                            <button type="submit"><svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg></button>
+                                            <input type="text" name="searchItem" class="bg-gray-200 peer border-0 focus:border-0 grow" placeholder="Search User">
+                                        </form>
+                                    </div>
+                                    <div class="relative flex items-center">
+                                        <button class="px-6 py-4 border rounded-xl flex gap-4 button-view-2" data-data-view="false">
+                                            Change View
+                                            <i class="fa fa-caret-down fa-xl" aria-hidden="true"></i>
+                                            <ul class="absolute w-full flex-col top-[100%] right-[10%] mt-1 border rounded-xl shadow-inner shadow-xl overflow-hidden modal-view-2 hidden bg-white z-30">
+                                                <li class="flex w-full">
+                                                    <a href="/application/view/view2" class="flex w-full gap-4 items-center px-3 py-2 hover:bg-gray-200">
+                                                        <i class="fa fa-bars fa-xl" aria-hidden="true"></i>
+                                                        <label>Bars views</label>
+                                                    </a>
+                                                </li>
+                                                <hr/>
+                                                <li class="flex w-full">
+                                                    <a href="/application/view/view1" class="flex w-full gap-4 items-center px-3 py-2 hover:bg-gray-200">
+                                                        <i class="fa fa-window-maximize fa-xl" aria-hidden="true"></i>
+                                                        <label>Cards views</label>
+                                                    </a>
+                                                </li>
+                                                <hr/>
+                                            </ul>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+                                    <!-- App card -->
+                                    <% data.data.application.forEach(function(item) {%>
+                                        <div class="flex gap-2 border shadow-inner shadow-xl p-4 w-full text-start">
+                                            <div class="flex flex-row gap-8 w-full">
+                                                <!-- App Image -->
+                                                <div class="flex justify-center items-center w-5/12">
+                                                    <img src="/assets/logo2.jpeg" class="h-3/4 object-contain" />
+                                                </div>
+                                                <div class="flex flex-col gap-1 grow">
+                                                    <div class="flex justify-end">
+                                                        <button class="px-3 flex gap-4 button-view-2 relative" data-data-view="false">
+                                                            <i class="fa fa-sliders fa-xl text-xl" aria-hidden="true"></i>
+                                                            <ul class="absolute w-40 flex-col right-[100%] mt-1 border rounded-xl shadow-inner shadow-xl overflow-hidden modal-view-2 hidden bg-white z-30">
+                                                                <li class="flex w-full">
+                                                                    <a href="#" class="flex w-full gap-4 items-center px-3 py-2 hover:bg-gray-200 active-modal-edit" data-id="<%= item.Id %>" data-id-type="<%= item.TypeConnectionId %>" data-type-connection="<%= item.TypeProfile_Id %>">
+                                                                        <label>Edit</label>
+                                                                    </a>
+                                                                </li>
+                                                                <hr/>
+                                                                <li class="flex w-full">
+                                                                    <a href="/profileRessource/<%= item.Id %>" class="flex w-full gap-4 items-center px-3 py-2 hover:bg-gray-200">
+                                                                        <label>Profile Ressource</label>
+                                                                    </a>
+                                                                </li>
+                                                                <hr/>
+                                                                <li class="flex w-full">
+                                                                    <a href="/application/removeOne/view1/<%= item.Id %>" class="flex w-full gap-4 items-center px-3 py-2 hover:bg-gray-200">
+                                                                        <label>Drop</label>
+                                                                    </a>
+                                                                </li>
+                                                                <hr/>
+                                                            </ul>
+                                                        </button>
+                                                    </div>
+                                                    <!-- App name -->
+                                                    <div class="flex">
+                                                        <label class="text-lg font-semibold"><%= item.Name.toUpperCase() %>  </label>
+                                                    </div>
+                                                    <!-- Connection type -->
+                                                    <div class="flex flex-col">
+                                                        <label class="text-lg font-semibold">Connection Type</label>
+                                                        <p class=""><%= item.TypeProfile == null? 'Not Define': item.TypeProfile %></p>
+                                                    </div>
+                                                    <!-- Numbers of user -->
+                                                    <div class="flex flex-col">
+                                                        <label class="text-lg font-semibold">Numbers of user</label>
+                                                        <p class=""><%= item.Cnt_Users %></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <%}) %> 
+                                </div>
+                                <div class="flex justify-between items-center mb-4" aria-label="Table navigation">
+                                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-gray-900"><%= data.page.startIndex %>-<%= data.page.endIndex %></span> of <span class="font-semibold text-gray-900 dark:text-white"><%= data.page.totalIndex %></span></span>
+                                    <ul class="flex items-center">
+                                        <% if (typeof data.page.previous != 'undefined') { %>
+                                            <li>
+                                                <a href="/application/<%= data.page.previous.page %>/<%= data.page.previous.limit %>" class="block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Previous</span>
+                                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                                </a>
+                                            </li>
+                                        <% } %> 
+                                        <li>
+                                            <a href="#" aria-current="page" class="z-10 py-2 px-3 leading-tight text-red-600 bg-red-50 border border-red-300 hover:bg-red-100 hover:text-red-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"><%= data.page.actualPage %></a>
+                                        </li>
+                                        <% if (typeof data.page.next != 'undefined') { %>
+                                            <li>
+                                                <a href="/application/<%= data.page.next.page %>/<%= data.page.next.limit %>" class="block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Next</span>
+                                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                                </a>
+                                            </li>
+                                        <% } %> 
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modals -->
+            <!-- Modal 1 -->
+            <div class="absolute w-full h-full hidden modal-left-bar">
+                <div class="relative flex w-full h-full">
+                    <div class="absolute w-full h-full bg-black/30 bg-modal-left-bar"></div>
+                    <div class="absolute flex flex-col gap-4 h-full border-r px-6 w-4/12 md:w-3/12 justify-between lg:hidden bg-white button-translate-in">
+                        <div class="flex flex-col gap-4 w-full">  
+                            <div class="flex py-4">
+                                <div class="flex flex-row justify-between items-center w-full">
+                                    <label class="text-xl font-medium ">
+                                        Name
+                                    </label>
+                                    <a 
+                                    href=""><i class="fa fa-chevron-right fa-xl" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-gray-700">Users</label>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-window-maximize fa-xl" aria-hidden="true"></i>
+                                    Home
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <div class="h-full w-[3px] bg-black rounded-t-lg rounded-b-lg"></div>
+                                    <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                                    Users
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-folder-o fa-xl" aria-hidden="true"></i>
+                                    Profile Metier
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-folder-o fa-xl" aria-hidden="true"></i>
+                                    Profile Metier
+                                </butto
+                                n>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                                    Revue
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex w-full">
+                            <img src="/assets/logo.png" class="w-full object-contain mb-10" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute w-full h-full modal-create hidden">
+            <div class="relative w-full h-full flex justify-center items-center">
+                <div class="absolute w-full h-full bg-black/30 bg-modal-left-bar remove-modal-create"></div>
+                <div class="absolute flex w-4/12 bg-white rounded-lg">
+                    <div class="flex flex-col px-8 py-4 gap-10 w-full">
+                        <div class="flex flex-row justify-between items-center">
+                            <h1 class="text-lg font-semibold">Add Application</h1>
+                            <button class="remove-modal-create"><i class="fa fa-times text-2xl text-red-600" aria-hidden="true"></i></button>
+                        </div>
+                        <form class="flex flex-col gap-6" method="post" action="/application/view/view1">
+                            <div class="flex flex-col gap-1">
+                                <label class="text-md font-semibold">Name</label>
+                                <div class="flex flex-row gap-2 border-b border-black focus:border-red items-center pb-2">
+                                    <input type="text" name="name" class="peer border-0 focus:border-0 text-md text-gray-400 grow" required>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <label class="text-md font-semibold">Description</label>
+                                <div class="flex flex-row gap-2 border-b border-black focus:border-red items-center pb-2">
+                                    <textarea name="description" cols="30" rows="2" class="focus:border-0 text-md text-gray-400 grow"></textarea>
+                                    <!-- <input type="text" name="description" class="peer border-0 focus:border-0 text-md text-gray-400 grow"> -->
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <label class="text-md font-semibold">Type of connection</label>
+                                <select class="flex flex-row gap-2 border-b border-black focus:border-red items-center p-2 bg-white" name="typeConnection">
+                                    <% data.data.typeConnections.forEach(typeConnection => { %>
+                                        <option value="<%= typeConnection.Id %>"> <%= typeConnection.Name %> </option>
+                                    <%  }); %>
+                                </select>
+                            </div>
+                            <div class="flex w-full justify-center">
+                                <button type="submit" class="px-4 py-2 rounded-lg bg-black text-white text-lg font-semibold">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute w-full h-full modal-edit hidden">
+            <div class="relative w-full h-full flex justify-center items-center">
+                <div class="absolute w-full h-full bg-black/30 bg-modal-left-bar remove-modal-edit"></div>
+                <div class="absolute flex w-4/12 bg-white rounded-lg">
+                    <div class="flex flex-col px-4 py-2 gap-10 w-full">
+                        <h1 class="text-lg font-semibold">Edit Type Connection</h1>
+                        <form class="flex flex-col gap-4" method="post" action="/application/edit/view1">
+                            <input type="number" name="id" value="" class="hidden edit-id"/>
+                            <div class="flex flex-col gap-1">
+                                <label class="text-md font-semibold">Name</label>
+                                <div class="flex flex-row gap-2 border-b border-black focus:border-red items-center pb-2">
+                                    <input type="text" name="name" class="peer border-0 focus:border-0 text-md text-gray-400 edit-name grow" required>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <label class="text-md font-semibold">Description</label>
+                                <div class="flex flex-row gap-2 border-b border-black focus:border-red items-center pb-2">
+                                    <textarea name="description" cols="30" rows="2" class="focus:border-0 text-md text-gray-400 grow edit-description"></textarea>
+                                    <!-- <input type="text" name="abreviation" class="peer border-0 focus:border-0 text-md text-gray-400 edit-abreviation grow"> -->
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <label class="text-md font-semibold">Type of connection</label>
+                                <select class="flex flex-row gap-2 border-b border-black focus:border-red items-center p-2 bg-white edit-typeConnection" name="typeConnection">
+                                    <% data.data.typeConnections.forEach(typeConnection => { %>
+                                        <option value="<%= typeConnection.Id %>"> <%= typeConnection.Name %> </option>
+                                    <%  }); %>
+                                </select>
+                            </div>
+                            <div class="flex w-full justify-center">
+                                <button type="submit" class="px-4 py-2 rounded-lg bg-black text-white text-lg font-semibold">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Script -->
+        <%- include('../layouts/footer.ejs') %>
+        <script>
+            $(".active-modal-create").click(function() {
+                if($(this).attr("data-view") == "true") {
+                    $(".modal-create").removeClass("flex");
+                    $(".modal-create").addClass("hidden");
+                    $(this).attr("data-view", "false");
+                } else {
+                    $(".modal-create").removeClass("hidden");
+                    $(".modal-create").addClass("flex");
+                    $(this).attr("data-view", "true");
+                }
+            });
+
+            $(".remove-modal-create").click(function() {
+                $(".modal-create").removeClass("flex");
+                $(".modal-create").addClass("hidden");
+                $(".active-modal-create").attr("data-view", "false");
+            });
+
+            $(".active-modal-edit").click(function() {
+                if($(this).attr("data-view") == "true") {
+                    $(".modal-edit").removeClass("flex");
+                    $(".modal-edit").addClass("hidden");
+                    $(this).attr("data-view", "false");
+                } else {
+                    $(".modal-edit").removeClass("hidden");
+                    $(".modal-edit").addClass("flex");
+                    var id = $(this).attr("data-id");
+                    var idTypeConnection = $(this).attr("data-id-type");
+                    const data = JSON.parse('<%- JSON.stringify(data) %>');
+                    data.data.application.forEach(item => {
+                        if (item.Id == id) {
+                            alert($(this).attr("data-type-connection"));
+                            $(".edit-id").attr("value", id);
+                            $(".edit-name").attr("value", item.Name);
+                            $(".edit-description").attr("value", item.Description);
+                            $(".edit-typeConnection").val($(this).attr("data-type-connection"));
+                        }
+                    });
+                    $(this).attr("data-view", "true");
+                }
+            });
+
+            $(".remove-modal-edit").click(function() {
+                $(".modal-edit").removeClass("flex");
+                $(".modal-edit").addClass("hidden");
+                $(".active-modal-edit").attr("data-view", "false");
+            });
+            
+        </script>
+    </body>
+</html>

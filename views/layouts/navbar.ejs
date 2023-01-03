@@ -1,0 +1,58 @@
+<div class="lg:flex flex-col gap-4 h-full border-r px-6 w-3/12 lg:w-[20%] xl:w-[18%] justify-between hidden">
+    <div class="flex flex-col gap-4 w-full">  
+        <div class="flex py-4">
+            <div class="flex flex-row justify-between items-center w-full">
+                <img src="/assets/logo2.jpeg" class="h-10 object-contain" />
+                <label class="text-md font-medium ">
+                    Gestion Habilitation
+                </label>
+                <a href=""><i class="fa fa-chevron-right fa-xl" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        <div class="flex flex-col gap-2 text-base">
+            <label class="text-gray-700">Users</label>
+            <!-- <button class="flex flex-row gap-2 items-center  py-2 hover:bg-gray-200 hover:px-2 rounded-lg">
+                <i class="fa fa-window-maximize fa-xl" aria-hidden="true"></i>
+                Home
+            </button> -->
+            <a href="/user/view/view1" class="flex flex-row gap-2 items-center <%= (position == "user")? "font-semibold":"" %> py-2 hover:bg-gray-200 hover:px-2 rounded-lg">
+                <% if (position == "user") { %>
+                    <div class="flex h-[12px] w-[3px] bg-black rounded-t-lg rounded-b-lg"></div>
+                <% } %>  
+                <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                User
+            </a>
+            <a href="/profileMetier " class="flex flex-row gap-2 items-center <%= (position == "profileMetier")? "font-semibold":"" %> py-2 hover:bg-gray-200 hover:px-2 rounded-lg">
+                <% if (position == "profileMetier") { %>
+                    <div class="flex h-[12px] w-[3px] bg-black rounded-t-lg rounded-b-lg"></div>
+                <% } %>  
+                <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                Profile Metier
+            </a>
+            <a href="/application/view/view1" class="flex flex-row gap-2 items-center <%= (position == "application")? "font-semibold":"" %> py-2 hover:bg-gray-200 hover:px-2 rounded-lg">
+                <% if (position == "application") { %>
+                    <div class="flex h-[12px] w-[3px] bg-black rounded-t-lg rounded-b-lg"></div>
+                <% } %>  
+                <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                Application
+            </a>
+            <!-- <a href="/logId" class="flex flex-row gap-2 items-center <%= (position == "logId")? "font-semibold":"" %> py-2 hover:bg-gray-200 hover:px-2 rounded-lg">
+                <% if (position == "logId") { %>
+                    <div class="flex h-[12px] w-[3px] bg-black rounded-t-lg rounded-b-lg"></div>
+                <% } %>  
+                <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                Log Id
+            </a> -->
+            <a href="/typeConnection " class="flex flex-row gap-2 items-center <%= (position == "typeConnection")? "font-semibold":"" %> py-2 hover:bg-gray-200 hover:px-2 rounded-lg">
+                <% if (position == "typeConnection") { %>
+                    <div class="flex h-[12px] w-[3px] bg-black rounded-t-lg rounded-b-lg"></div>
+                <% } %>  
+                <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                Type of connection
+            </a>
+        </div>
+    </div>
+    <div class="flex w-full">
+        <img src="/assets/logo.png" class="w-full object-contain mb-10" />
+    </div>
+</div>

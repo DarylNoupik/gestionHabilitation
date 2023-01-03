@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../layouts/header.ejs') %>
+    </head>
+    <body>
+        <div class="relative w-full h-full max-w-screen-6xl flex">
+            <div class="flex flex-row w-full h-full">
+                <!-- Navigation bar -->
+                <%- include('../layouts/navbar.ejs', {position: "profileMetier"}) %>
+
+                <!-- All content -->
+                <div class="grow flex h-full overflow-y-auto">
+                    <div class="flex flex-col w-full ">
+                        <!-- Top bar -->
+                        <%- include('../layouts/topBar.ejs', {name: "Profile Metier / Applications"}) %>
+                        <!-- Container -->
+                        <div class="flex px-10 mt-4 justify-center items-center ">
+                            <div class="flex flex-col lg:flex-row gap-8 w-full justify-between">
+                                <!-- App description -->
+                                <div class="flex flex-row lg:flex-col w-full lg:w-[16%]">
+                                    <div class="flex border p-8 bg-[#FF432A] justify-center">
+                                        <img src="/assets/logo2.jpeg" class="w-5/12 object-contain" />
+                                    </div>
+                                    <div class="border px-4 py-1">
+                                        <h1 class="text-xl font-bold">Profile Metier : <label class="text-lg font-semibold"><%= data.data.profileMetiers[0].Name %> </label></h1>
+                                        <h2 class="text-lg">Abreviation : <%= data.data.profileMetiers[0].Abreviation %> </h2>
+                                    </div>
+                                </div>
+                                <div class="grow flex flex-col">
+                                    <div class="flex flex-col lg:flex-row justify-end items-center w-full gap-4 text-sm">
+                                        <!-- Actions button -->
+                                        <div class="flex flex-row items-center gap-4">
+                                            <button class="px-4 xl:px-6 py-2 xl:py-4 bg-black text-white rounded-xl active-modal-create" data-view="false">Add Applications</button>
+                                        </div>
+                                    </div>
+                                    <div class="flex mt-8">
+                                        <table class="text-sm text-left text-gray-500 w-full">
+                                            <thead class="text-xs text-gray-700 uppercase bg-gray-200">
+                                                <tr>
+                                                    <th scope="col" class="py-3 px-6">
+                                                        Name
+                                                    </th>
+                                                    <th scope="col" class="py-3 px-6">
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% data.data.applications.forEach(function(item) {%>
+                                                    <tr class="bg-white border-b hover:bg-gray-50">
+                                                        <td class="p-4 w-4">
+                                                            <%= item.Name %> 
+                                                        </td>
+                                                        <td class="py-4 px-6 ">
+                                                            <!-- Modal toggle -->
+                                                            <a href="/profileMetier/profileRessource/<%= data.data.profileMetiers[0].Id %>/<%= item.Id %>" type="button" data-id="<%= item.Id %>" data-view="false" class="font-medium text-[#FF432A] hover:underline">Profile Ressource</a> /
+                                                            <a href="/profileMetier/application/<%= data.data.profileMetiers[0].Id %>/<%= item.Id %>" type="button" data-id="<%= item.Id %>" data-view="false" class="font-medium text-[#FF432A] hover:underline">Remove</a>
+                                                        </td>
+                                                    </tr>
+                                                <% }) %> 
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modals -->
+            <!-- Modal 1 -->
+            <div class="absolute w-full h-full hidden modal-left-bar">
+                <div class="relative flex w-full h-full">
+                    <div class="absolute w-full h-full bg-black/30 bg-modal-left-bar"></div>
+                    <div class="absolute flex flex-col gap-4 h-full border-r px-6 w-4/12 md:w-3/12 justify-between lg:hidden bg-white button-translate-in">
+                        <div class="flex flex-col gap-4 w-full">  
+                            <div class="flex py-4">
+                                <div class="flex flex-row justify-between items-center w-full">
+                                    <label class="text-xl font-medium ">
+                                        Name
+                                    </label>
+                                    <a 
+                                    href=""><i class="fa fa-chevron-right fa-xl" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-gray-700">Users</label>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-window-maximize fa-xl" aria-hidden="true"></i>
+                                    Home
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <div class="h-full w-[3px] bg-black rounded-t-lg rounded-b-lg"></div>
+                                    <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                                    Users
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-folder-o fa-xl" aria-hidden="true"></i>
+                                    Profile Metier
+                                </button>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-folder-o fa-xl" aria-hidden="true"></i>
+                                    Profile Metier
+                                </butto
+                                n>
+                                <button class="flex flex-row gap-2 text-xl items-center font-light">
+                                    <i class="fa fa-user-o fa-xl" aria-hidden="true"></i>
+                                    Revue
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex w-full">
+                            <img src="/assets/logo.png" class="w-full object-contain mb-10" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute w-full h-full modal-create hidden">
+            <div class="relative w-full h-full flex justify-center items-center">
+                <div class="absolute w-full h-full bg-black/30 bg-modal-left-bar remove-modal-create"></div>
+                <div class="absolute flex w-4/12 bg-white rounded-lg">
+                    <div class="flex flex-col px-8 py-4 gap-10 w-full">
+                        <div class="flex flex-row justify-between items-center">
+                            <h1 class="text-lg font-semibold">Add Application</h1>
+                            <button class="remove-modal-create"><i class="fa fa-times text-2xl text-red-600" aria-hidden="true"></i></button>
+                        </div>
+                        <form class="flex flex-col gap-6" method="post" action="/profileMetier/application/<%= data.data.profileMetiers[0].Id %>">
+                            <div class="flex flex-col gap-1">
+                                <label class="text-md font-semibold">Name</label>
+                                <select class="flex flex-row gap-2 border-b border-black focus:border-red items-center p-2 bg-white edit-typeConnection" name="application">
+                                    <% data.data.allApplications.forEach(application => { %>
+                                        <option value="<%= application.Id %>"> <%= application.Name %> </option>
+                                    <%  }); %>
+                                </select>
+                            </div>
+                            <div class="flex w-full justify-center">
+                                <button type="submit" class="px-4 py-2 rounded-lg bg-black text-white text-lg font-semibold">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Script -->
+        <%- include('../layouts/footer.ejs') %>
+        <script>
+            $(".active-modal-create").click(function() {
+                if($(this).attr("data-view") == "true") {
+                    $(".modal-create").removeClass("flex");
+                    $(".modal-create").addClass("hidden");
+                    $(this).attr("data-view", "false");
+                } else {
+                    $(".modal-create").removeClass("hidden");
+                    $(".modal-create").addClass("flex");
+                    $(this).attr("data-view", "true");
+                }
+            });
+
+            $(".remove-modal-create").click(function() {
+                $(".modal-create").removeClass("flex");
+                $(".modal-create").addClass("hidden");
+                $(".active-modal-create").attr("data-view", "false");
+            });
+
+            $(".active-modal-edit").click(function() {
+                if($(this).attr("data-view") == "true") {
+                    $(".modal-edit").removeClass("flex");
+                    $(".modal-edit").addClass("hidden");
+                    $(this).attr("data-view", "false");
+                } else {
+                    $(".modal-edit").removeClass("hidden");
+                    $(".modal-edit").addClass("flex");
+                    var id = $(this).attr("data-id");
+                    const data = JSON.parse('<%- JSON.stringify(data) %>');
+                    data.data.profileRessources.forEach(item => {
+                        if (item.Id == id) {
+                            $(".edit-id").attr("value", id);
+                            $(".edit-name").attr("value", item.Name);
+                        }
+                    });
+                    $(this).attr("data-view", "true");
+                }
+            });
+
+            $(".remove-modal-edit").click(function() {
+                $(".modal-edit").removeClass("flex");
+                $(".modal-edit").addClass("hidden");
+                $(".active-modal-edit").attr("data-view", "false");
+            });
+            
+        </script>
+    </body>
+</html>
