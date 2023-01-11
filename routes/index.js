@@ -9,6 +9,7 @@ const profileMetierRoute = require("./profileMetierRouter");
 const userRoute = require("./userRouter");
 const profileRessourceRoute = require("./profileRessourcesRouter");
 const userApplicationRoute = require("./userApplicationRouter");
+const settingRoute = require("./settingRouter");
 
 // Part use for define my routes
 const allRouter = [
@@ -43,6 +44,10 @@ const allRouter = [
     {
         path: "/userApplication",
         route: userApplicationRoute,
+    },
+    {
+        path: "/setting",
+        route: settingRoute,
     }
 ]
 

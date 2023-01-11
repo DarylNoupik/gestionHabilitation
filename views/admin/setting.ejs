@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../layouts/header.ejs') %>
+    </head>
+    <body>
+        <div class="relative w-full h-full max-w-screen-6xl flex">
+            <div class="flex flex-row w-full h-full">
+                <!-- Navigation bar -->
+                <%- include('../layouts/navbar.ejs', {position: "setting"}) %>
+
+                <!-- All content -->
+                <div class="grow flex h-full overflow-y-auto">
+                    <div class="flex flex-col w-full ">
+                        <!-- Top bar -->
+                        <%- include('../layouts/topBar.ejs', {name: "setting"}) %>
+                        <!-- Container -->
+                        <div class="flex px-10 mt-4 justify-center items-center ">
+                            <div class="flex flex-col gap-8 w-full w-6/12">
+                                <div class="flex flex-row w-full">
+                                    <button class="border-b border-black text-center bg-[#FF432A] py-4 w-1/2 text-white font-bold">
+                                        Change Info
+                                    </button>
+                                    <a href="/setting/password" class="border-b border-black text-center py-4 w-1/2 font-bold">
+                                        Change Password
+                                    </a>
+                                </div>
+                                <div class="flex justify-center items-center">
+                                    <form class="flex flex-col" action="/setting" method="POST">
+                                        <div class="flex flex-col gap-1">
+                                            <label>First Name</label>
+                                            <div class="flex flex-row gap-2 border-b border-black focus:border-red items-center pb-2">
+                                                <i class="fa fa-envelope-o fa-xl" aria-hidden="true"></i>
+                                                <input type="text" name="firstName" value="<%= data.data.FirstName %>" class="peer border-0 focus:border-0 text-xl grow" placeholder="Enter your username" required>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col gap-1">
+                                            <label>Last Name</label>
+                                            <div class="flex flex-row gap-2 border-b border-black focus:border-red items-center pb-2 group-input">
+                                                <i class="fa fa-envelope-o fa-xl" aria-hidden="true"></i>
+                                                <input type="text" name="lastName" value="<%= data.data.LastName %>" class="peer border-0 focus:border-0 text-xl grow input" placeholder="Enter your Password" required>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col gap-1">
+                                            <label>Phone Number</label>
+                                            <div class="flex flex-row gap-2 border-b border-black focus:border-red items-center pb-2 group-input">
+                                                <i class="fa fa-envelope-o fa-xl" aria-hidden="true"></i>
+                                                <input type="text" name="phoneNumber" value="<%= data.data.PhoneNumber %>" class="peer border-0 focus:border-0 text-xl grow input" placeholder="Enter your Phone Number">
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="flex justify-center px-2 py-4 rounded-2xl bg-[#FF432A] text-lg text-white font-bold text-white mt-8">
+                                            Update
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Script -->
+        <%- include('../layouts/footer.ejs') %>
+        <script>
+            $(".active-modal-create").click(function() {
+                if($(this).attr("data-view") == "true") {
+                    $(".modal-create").removeClass("flex");
+                    $(".modal-create").addClass("hidden");
+                    $(this).attr("data-view", "false");
+                } else {
+                    $(".modal-create").removeClass("hidden");
+                    $(".modal-create").addClass("flex");
+                    $(this).attr("data-view", "true");
+                }
+            });
+
+            $(".remove-modal-create").click(function() {
+                $(".modal-create").removeClass("flex");
+                $(".modal-create").addClass("hidden");
+                $(".active-modal-create").attr("data-view", "false");
+            });
+
+            $(".active-modal-edit").click(function() {
+                if($(this).attr("data-view") == "true") {
+                    $(".modal-edit").removeClass("flex");
+                    $(".modal-edit").addClass("hidden");
+                    $(this).attr("data-view", "false");
+                } else {
+                    $(".modal-edit").removeClass("hidden");
+                    $(".modal-edit").addClass("flex");
+                    var id = $(this).attr("data-id");
+                    var idTypeConnection = $(this).attr("data-id-type");
+                    const data = JSON.parse('<%- JSON.stringify(data) %>');
+                    data.data.application.forEach(item => {
+                        if (item.Id == id) {
+                            alert($(this).attr("data-type-connection"));
+                            $(".edit-id").attr("value", id);
+                            $(".edit-name").attr("value", item.Name);
+                            $(".edit-description").attr("value", item.Description);
+                            $(".edit-typeConnection").val($(this).attr("data-type-connection"));
+                        }
+                    });
+                    $(this).attr("data-view", "true");
+                }
+            });
+
+            $(".remove-modal-edit").click(function() {
+                $(".modal-edit").removeClass("flex");
+                $(".modal-edit").addClass("hidden");
+                $(".active-modal-edit").attr("data-view", "false");
+            });
+            
+        </script>
+    </body>
+</html>

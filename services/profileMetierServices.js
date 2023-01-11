@@ -658,7 +658,7 @@ const getprofileRessourceByApplication = async (entries) => {
             SELECT PR.Id, PR.Name
             FROM dbo.ProfileMetier_ProfileRessource_Application AS PPA
             JOIN dbo.ProfileRessources AS PR
-            ON PR.Id = PPA.ApplicationId
+            ON PR.Id = PPA.ProfileRessourceId
             WHERE PPA.ApplicationId = @application AND PPA.ProfileMetierId = @profileMetier
             `
         ).then(async(data) => {
@@ -689,7 +689,7 @@ const getprofileRessourceByApplication = async (entries) => {
             result.data["profileMetiers"] = profileMetiers.recordset;
             const applications = await pool.request().input("application", sql.Int, entries.application).query("SELECT * FROM dbo.Applications WHERE Id = @application");
             result.data["applications"] = applications.recordset;
-            console.log(result)
+            console.log(result["allProfileRessources"])
             return result;
         }).catch((error) => {
             result.statut = 500;

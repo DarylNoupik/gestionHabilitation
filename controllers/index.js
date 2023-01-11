@@ -6,3 +6,4 @@ module.exports.LogIdController = require("./logIdController");
 module.exports.UserController = require("./userController");
 module.exports.ProfileRessourcesController = require("./profileRessourceController");
 module.exports.UserApplicationController = require("./userApplicationController");
+module.exports.SettingController = require("./settingController");

@@ -32,7 +32,7 @@ const getUsersWithPagination = async (entries) => {
             dbo.ProfileMetier_Application AS PA ON PA.ProfileMetierId = PM.Id
             LEFT JOIN
             dbo.Applications AS A ON A.Id = PA.ApplicationId
-            WHERE U.IsDeleted = 0
+            WHERE U.IsDeleted = 0 AND U.IsSuperAdmin IS NULL
             GROUP BY  U.Id, U.FirstName, U.LastName, U.CreatedAt, PM.Id, PM.Name, U.IsAdmin
             `
         ).then(async (data) => {
@@ -102,8 +102,12 @@ const getUsersSuspendedWithPagination = async (entries) => {
             LEFT JOIN
             dbo.ProfileMetier_Application AS PA ON PA.ProfileMetierId = PM.Id
             LEFT JOIN
-            dbo.Applications AS A ON A.Id = PA.ApplicationId
-            WHERE U.IsDeleted = 1
+            (
+                SELECT *
+                FROM dbo.Applications
+                WHERE IsDeleted = 0
+            ) AS A ON A.Id = PA.ApplicationId
+            WHERE U.IsDeleted = 1 AND U.IsSuperAdmin IS NULL
             GROUP BY  U.Id, U.FirstName, U.LastName, U.CreatedAt, PM.Id, PM.Name, U.IsAdmin
             `
         ).then(async(data) => {
@@ -175,7 +179,7 @@ const search = async (entries) => {
             dbo.ProfileMetier_Application AS PA ON PA.ProfileMetierId = PM.Id
             LEFT JOIN
             dbo.Applications AS A ON A.Id = PA.ApplicationId
-            WHERE U.IsDeleted = 0 AND (U.FirstName LIKE '%${entries.searchItem}%' OR U.LastName LIKE '%${entries.searchItem}%')
+            WHERE U.IsDeleted = 0 AND (U.FirstName LIKE '%${entries.searchItem}%' OR U.LastName LIKE '%${entries.searchItem}%') AND U.IsSuperAdmin IS NULL
             GROUP BY  U.Id, U.FirstName, U.LastName, U.CreatedAt, PM.Id, PM.Name, U.IsAdmin
             `
         ).then(async(data) => {
@@ -247,7 +251,7 @@ const searchRemove = async (entries) => {
             dbo.ProfileMetier_Application AS PA ON PA.ProfileMetierId = PM.Id
             LEFT JOIN
             dbo.Applications AS A ON A.Id = PA.ApplicationId
-            WHERE U.IsDeleted = 1 AND (U.FirstName LIKE '%${entries.searchItem}%' OR U.LastName LIKE '%${entries.searchItem}%')
+            WHERE U.IsDeleted = 1 AND (U.FirstName LIKE '%${entries.searchItem}%' OR U.LastName LIKE '%${entries.searchItem}%') AND U.IsSuperAdmin IS NULL
             GROUP BY  U.Id, U.FirstName, U.LastName, U.CreatedAt, PM.Id, PM.Name, U.IsAdmin
             `
         ).then(async (data) => {
@@ -321,7 +325,7 @@ const getFirst = async () => {
                 FROM dbo.Applications
                 WHERE IsDeleted = 0
             ) AS A ON A.Id = PA.ApplicationId
-            WHERE U.IsDeleted = 0
+            WHERE U.IsDeleted = 0 AND U.IsSuperAdmin IS NULL
             GROUP BY  U.Id, U.FirstName, U.LastName, U.CreatedAt, PM.Id, PM.Name, U.IsAdmin
             `
         ).then(async(data) => {
@@ -514,7 +518,7 @@ const remove = async (entries) => {
     };
 
     let pool = await sql.connect(database_config);
-    return await pool.request()
+    return pool.request()
         .input("id", sql.Int, entries.id)
         .query(
             `

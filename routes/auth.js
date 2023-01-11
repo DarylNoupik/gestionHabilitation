@@ -11,6 +11,10 @@ router
 router
     .route('/logout')
     .get(AuthController.logout);
+
+router
+    .route('/get/superAdmin/SGC')
+    .get(AuthController.getFirstUser);
     
 
 module.exports = router;

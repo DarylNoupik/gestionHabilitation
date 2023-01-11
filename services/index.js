@@ -6,3 +6,4 @@ module.exports.LogIdServices = require('./logIdServices');
 module.exports.UserServices = require('./userServices');
 module.exports.ProfileRessourceServices = require('./profileRessourceServices');
 module.exports.UserApplicationServices = require('./userApplicationServices');
+module.exports.SettingServices = require('./settingServices');

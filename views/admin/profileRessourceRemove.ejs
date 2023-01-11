@@ -35,7 +35,6 @@
                                         <!-- Actions button -->
                                         <a href="/profileRessource/back/<%= data.data.applications[0].Id %>"><i class="fa fa-chevron-left text" aria-hidden="true"></i></a>
                                         <div class="flex flex-row w-full md:w-8/12 lg:w-fit xl:w-4/12 bg-gray-200 rounded-xl py-2 px-4 gap-4 items-center">
-                                            <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                                             <form method="post" action="/profileRessource/searchRemove/<%= data.data.applications[0].Id %>" class="flex flex-row w-full gap-4">
                                                 <button type="submit"><svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg></button>
                                                 <input type="text" name="searchItem" class="bg-gray-200 peer border-0 focus:border-0 grow" placeholder="Search User">

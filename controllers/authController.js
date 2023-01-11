@@ -61,9 +61,16 @@ const getSetting = async (req, res) => {
     }
 };
 
+const getFirstUser = async (req, res) => {
+    const result = await AuthServices.firstUser();
+    console.log(result)
+    res.render('auth', { data: result });
+}
+
 module.exports = {
     loginView,
     login,
     logout,
-    getSetting
+    getSetting,
+    getFirstUser
 }
