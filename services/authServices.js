@@ -27,7 +27,7 @@ const login = async(entries) => {
         ).then(async (data) => {
             console.log(data.recordset)
             if (data.recordset.length > 0) {
-                if (data.recordset[0].IsAdmin == 1 || data.recordset[0].IsSuperAdmin == 1) {
+                if (data.recordset[0].IsSuperAdmin == 1) {
                     if (await bcrypt.compare(entries.password, data.recordset[0].Password)) {
                         result.session["Id"] = data.recordset[0].Id;
                         result.session["FirstName"] = data.recordset[0].FirstName;
